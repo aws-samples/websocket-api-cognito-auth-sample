@@ -1,0 +1,733 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Snapshot test 1`] = `
+Object {
+  "Outputs": Object {
+    "Region": Object {
+      "Value": Object {
+        "Ref": "AWS::Region",
+      },
+    },
+    "UserPoolId": Object {
+      "Value": Object {
+        "Ref": "authuserPoolE16D54A3",
+      },
+    },
+    "UserPoolWebClientId": Object {
+      "Value": Object {
+        "Ref": "authuserPoolclient81547F0C",
+      },
+    },
+    "WebSocketEndpoint": Object {
+      "Value": Object {
+        "Fn::Join": Array [
+          "",
+          Array [
+            Object {
+              "Fn::GetAtt": Array [
+                "websocketapi6BAADC55",
+                "ApiEndpoint",
+              ],
+            },
+            "/prod",
+          ],
+        ],
+      },
+    },
+  },
+  "Parameters": Object {
+    "AssetParameters34ded589685dc9a2b989159a4d00c8d6bd780b0c8639bb14f787c38012b931afArtifactHash8C7C64A2": Object {
+      "Description": "Artifact hash for asset \\"34ded589685dc9a2b989159a4d00c8d6bd780b0c8639bb14f787c38012b931af\\"",
+      "Type": "String",
+    },
+    "AssetParameters34ded589685dc9a2b989159a4d00c8d6bd780b0c8639bb14f787c38012b931afS3Bucket39A6B72D": Object {
+      "Description": "S3 bucket for asset \\"34ded589685dc9a2b989159a4d00c8d6bd780b0c8639bb14f787c38012b931af\\"",
+      "Type": "String",
+    },
+    "AssetParameters34ded589685dc9a2b989159a4d00c8d6bd780b0c8639bb14f787c38012b931afS3VersionKeyF1D9DB0D": Object {
+      "Description": "S3 key for asset version \\"34ded589685dc9a2b989159a4d00c8d6bd780b0c8639bb14f787c38012b931af\\"",
+      "Type": "String",
+    },
+    "AssetParameters923f820b1617ed315e8514af425f37c5d8911522ea9f2da6aae7672d834e9251ArtifactHash4024E7E4": Object {
+      "Description": "Artifact hash for asset \\"923f820b1617ed315e8514af425f37c5d8911522ea9f2da6aae7672d834e9251\\"",
+      "Type": "String",
+    },
+    "AssetParameters923f820b1617ed315e8514af425f37c5d8911522ea9f2da6aae7672d834e9251S3Bucket95CE8645": Object {
+      "Description": "S3 bucket for asset \\"923f820b1617ed315e8514af425f37c5d8911522ea9f2da6aae7672d834e9251\\"",
+      "Type": "String",
+    },
+    "AssetParameters923f820b1617ed315e8514af425f37c5d8911522ea9f2da6aae7672d834e9251S3VersionKeyE1750CEE": Object {
+      "Description": "S3 key for asset version \\"923f820b1617ed315e8514af425f37c5d8911522ea9f2da6aae7672d834e9251\\"",
+      "Type": "String",
+    },
+  },
+  "Resources": Object {
+    "authuserPoolE16D54A3": Object {
+      "DeletionPolicy": "Delete",
+      "Properties": Object {
+        "AccountRecoverySetting": Object {
+          "RecoveryMechanisms": Array [
+            Object {
+              "Name": "verified_phone_number",
+              "Priority": 1,
+            },
+            Object {
+              "Name": "verified_email",
+              "Priority": 2,
+            },
+          ],
+        },
+        "AdminCreateUserConfig": Object {
+          "AllowAdminCreateUserOnly": false,
+        },
+        "AutoVerifiedAttributes": Array [
+          "email",
+        ],
+        "EmailVerificationMessage": "The verification code to your new account is {####}",
+        "EmailVerificationSubject": "Verify your new account",
+        "SmsVerificationMessage": "The verification code to your new account is {####}",
+        "VerificationMessageTemplate": Object {
+          "DefaultEmailOption": "CONFIRM_WITH_CODE",
+          "EmailMessage": "The verification code to your new account is {####}",
+          "EmailSubject": "Verify your new account",
+          "SmsMessage": "The verification code to your new account is {####}",
+        },
+      },
+      "Type": "AWS::Cognito::UserPool",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "authuserPoolclient81547F0C": Object {
+      "Properties": Object {
+        "AllowedOAuthFlows": Array [
+          "implicit",
+          "code",
+        ],
+        "AllowedOAuthFlowsUserPoolClient": true,
+        "AllowedOAuthScopes": Array [
+          "profile",
+          "phone",
+          "email",
+          "openid",
+          "aws.cognito.signin.user.admin",
+        ],
+        "CallbackURLs": Array [
+          "https://example.com",
+        ],
+        "ExplicitAuthFlows": Array [
+          "ALLOW_USER_PASSWORD_AUTH",
+          "ALLOW_USER_SRP_AUTH",
+          "ALLOW_REFRESH_TOKEN_AUTH",
+        ],
+        "SupportedIdentityProviders": Array [
+          "COGNITO",
+        ],
+        "UserPoolId": Object {
+          "Ref": "authuserPoolE16D54A3",
+        },
+      },
+      "Type": "AWS::Cognito::UserPoolClient",
+    },
+    "handler9A1C0C74": Object {
+      "DependsOn": Array [
+        "handlerServiceRoleDefaultPolicy6BFD97B0",
+        "handlerServiceRole2B8AB3DF",
+      ],
+      "Properties": Object {
+        "Code": Object {
+          "S3Bucket": Object {
+            "Ref": "AssetParameters34ded589685dc9a2b989159a4d00c8d6bd780b0c8639bb14f787c38012b931afS3Bucket39A6B72D",
+          },
+          "S3Key": Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                Object {
+                  "Fn::Select": Array [
+                    0,
+                    Object {
+                      "Fn::Split": Array [
+                        "||",
+                        Object {
+                          "Ref": "AssetParameters34ded589685dc9a2b989159a4d00c8d6bd780b0c8639bb14f787c38012b931afS3VersionKeyF1D9DB0D",
+                        },
+                      ],
+                    },
+                  ],
+                },
+                Object {
+                  "Fn::Select": Array [
+                    1,
+                    Object {
+                      "Fn::Split": Array [
+                        "||",
+                        Object {
+                          "Ref": "AssetParameters34ded589685dc9a2b989159a4d00c8d6bd780b0c8639bb14f787c38012b931afS3VersionKeyF1D9DB0D",
+                        },
+                      ],
+                    },
+                  ],
+                },
+              ],
+            ],
+          },
+        },
+        "Environment": Object {
+          "Variables": Object {
+            "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "1",
+            "CONNECTION_TABLE_NAME": Object {
+              "Ref": "storageconnectionIdTable7B549566",
+            },
+          },
+        },
+        "Handler": "index.handler",
+        "Role": Object {
+          "Fn::GetAtt": Array [
+            "handlerServiceRole2B8AB3DF",
+            "Arn",
+          ],
+        },
+        "Runtime": "nodejs14.x",
+      },
+      "Type": "AWS::Lambda::Function",
+    },
+    "handlerServiceRole2B8AB3DF": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "lambda.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": Array [
+          Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+              ],
+            ],
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "handlerServiceRoleDefaultPolicy6BFD97B0": Object {
+      "Properties": Object {
+        "PolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": Array [
+                "dynamodb:BatchGetItem",
+                "dynamodb:GetRecords",
+                "dynamodb:GetShardIterator",
+                "dynamodb:Query",
+                "dynamodb:GetItem",
+                "dynamodb:Scan",
+                "dynamodb:ConditionCheckItem",
+                "dynamodb:BatchWriteItem",
+                "dynamodb:PutItem",
+                "dynamodb:UpdateItem",
+                "dynamodb:DeleteItem",
+              ],
+              "Effect": "Allow",
+              "Resource": Array [
+                Object {
+                  "Fn::GetAtt": Array [
+                    "storageconnectionIdTable7B549566",
+                    "Arn",
+                  ],
+                },
+                Object {
+                  "Fn::Join": Array [
+                    "",
+                    Array [
+                      Object {
+                        "Fn::GetAtt": Array [
+                          "storageconnectionIdTable7B549566",
+                          "Arn",
+                        ],
+                      },
+                      "/index/*",
+                    ],
+                  ],
+                },
+              ],
+            },
+            Object {
+              "Action": "execute-api:ManageConnections",
+              "Effect": "Allow",
+              "Resource": Object {
+                "Fn::Join": Array [
+                  "",
+                  Array [
+                    "arn:",
+                    Object {
+                      "Ref": "AWS::Partition",
+                    },
+                    ":execute-api:",
+                    Object {
+                      "Ref": "AWS::Region",
+                    },
+                    ":",
+                    Object {
+                      "Ref": "AWS::AccountId",
+                    },
+                    ":",
+                    Object {
+                      "Ref": "websocketapi6BAADC55",
+                    },
+                    "/*",
+                  ],
+                ],
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "PolicyName": "handlerServiceRoleDefaultPolicy6BFD97B0",
+        "Roles": Array [
+          Object {
+            "Ref": "handlerServiceRole2B8AB3DF",
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Policy",
+    },
+    "handlerauthorizer4ED01BFC": Object {
+      "DependsOn": Array [
+        "handlerauthorizerServiceRole02D804DF",
+      ],
+      "Properties": Object {
+        "Code": Object {
+          "S3Bucket": Object {
+            "Ref": "AssetParameters923f820b1617ed315e8514af425f37c5d8911522ea9f2da6aae7672d834e9251S3Bucket95CE8645",
+          },
+          "S3Key": Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                Object {
+                  "Fn::Select": Array [
+                    0,
+                    Object {
+                      "Fn::Split": Array [
+                        "||",
+                        Object {
+                          "Ref": "AssetParameters923f820b1617ed315e8514af425f37c5d8911522ea9f2da6aae7672d834e9251S3VersionKeyE1750CEE",
+                        },
+                      ],
+                    },
+                  ],
+                },
+                Object {
+                  "Fn::Select": Array [
+                    1,
+                    Object {
+                      "Fn::Split": Array [
+                        "||",
+                        Object {
+                          "Ref": "AssetParameters923f820b1617ed315e8514af425f37c5d8911522ea9f2da6aae7672d834e9251S3VersionKeyE1750CEE",
+                        },
+                      ],
+                    },
+                  ],
+                },
+              ],
+            ],
+          },
+        },
+        "Environment": Object {
+          "Variables": Object {
+            "APP_CLIENT_ID": Object {
+              "Ref": "authuserPoolclient81547F0C",
+            },
+            "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "1",
+            "USER_POOL_ID": Object {
+              "Ref": "authuserPoolE16D54A3",
+            },
+            "USER_POOL_REGION": Object {
+              "Ref": "AWS::Region",
+            },
+          },
+        },
+        "Handler": "index.handler",
+        "Role": Object {
+          "Fn::GetAtt": Array [
+            "handlerauthorizerServiceRole02D804DF",
+            "Arn",
+          ],
+        },
+        "Runtime": "nodejs14.x",
+      },
+      "Type": "AWS::Lambda::Function",
+    },
+    "handlerauthorizerBackendStackwebsocketA340BC86Permissions6A1233C9": Object {
+      "Properties": Object {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": Object {
+          "Fn::GetAtt": Array [
+            "handlerauthorizer4ED01BFC",
+            "Arn",
+          ],
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "arn:",
+              Object {
+                "Ref": "AWS::Partition",
+              },
+              ":execute-api:",
+              Object {
+                "Ref": "AWS::Region",
+              },
+              ":",
+              Object {
+                "Ref": "AWS::AccountId",
+              },
+              ":",
+              Object {
+                "Ref": "websocketapi6BAADC55",
+              },
+              "/authorizers/",
+              Object {
+                "Ref": "websocketauthorizerA68CA492",
+              },
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::Lambda::Permission",
+    },
+    "handlerauthorizerServiceRole02D804DF": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "lambda.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": Array [
+          Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+              ],
+            ],
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "storageconnectionIdTable7B549566": Object {
+      "DeletionPolicy": "Delete",
+      "Properties": Object {
+        "AttributeDefinitions": Array [
+          Object {
+            "AttributeName": "connectionId",
+            "AttributeType": "S",
+          },
+          Object {
+            "AttributeName": "userId",
+            "AttributeType": "S",
+          },
+        ],
+        "BillingMode": "PAY_PER_REQUEST",
+        "GlobalSecondaryIndexes": Array [
+          Object {
+            "IndexName": "userIdIndex",
+            "KeySchema": Array [
+              Object {
+                "AttributeName": "userId",
+                "KeyType": "HASH",
+              },
+            ],
+            "Projection": Object {
+              "ProjectionType": "ALL",
+            },
+          },
+        ],
+        "KeySchema": Array [
+          Object {
+            "AttributeName": "connectionId",
+            "KeyType": "HASH",
+          },
+        ],
+        "TimeToLiveSpecification": Object {
+          "AttributeName": "removedAt",
+          "Enabled": true,
+        },
+      },
+      "Type": "AWS::DynamoDB::Table",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "websocketapi6BAADC55": Object {
+      "Properties": Object {
+        "Name": "api",
+        "ProtocolType": "WEBSOCKET",
+        "RouteSelectionExpression": "$request.body.action",
+      },
+      "Type": "AWS::ApiGatewayV2::Api",
+    },
+    "websocketapiconnectRoute50EA91CF": Object {
+      "Properties": Object {
+        "ApiId": Object {
+          "Ref": "websocketapi6BAADC55",
+        },
+        "AuthorizationType": "CUSTOM",
+        "AuthorizerId": Object {
+          "Ref": "websocketauthorizerA68CA492",
+        },
+        "RouteKey": "$connect",
+        "Target": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "integrations/",
+              Object {
+                "Ref": "websocketapiconnectRouteWebSocketIntegrationa76404738367620e6bbc9be82111ea649E3AB3B8",
+              },
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::ApiGatewayV2::Route",
+    },
+    "websocketapiconnectRouteBackendStackwebsocketapiconnectRoute0639A138PermissionDA2FF12D": Object {
+      "Properties": Object {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": Object {
+          "Fn::GetAtt": Array [
+            "handler9A1C0C74",
+            "Arn",
+          ],
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "arn:",
+              Object {
+                "Ref": "AWS::Partition",
+              },
+              ":execute-api:",
+              Object {
+                "Ref": "AWS::Region",
+              },
+              ":",
+              Object {
+                "Ref": "AWS::AccountId",
+              },
+              ":",
+              Object {
+                "Ref": "websocketapi6BAADC55",
+              },
+              "/*/*$connect",
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::Lambda::Permission",
+    },
+    "websocketapiconnectRouteWebSocketIntegrationa76404738367620e6bbc9be82111ea649E3AB3B8": Object {
+      "Properties": Object {
+        "ApiId": Object {
+          "Ref": "websocketapi6BAADC55",
+        },
+        "IntegrationType": "AWS_PROXY",
+        "IntegrationUri": Object {
+          "Fn::GetAtt": Array [
+            "handler9A1C0C74",
+            "Arn",
+          ],
+        },
+      },
+      "Type": "AWS::ApiGatewayV2::Integration",
+    },
+    "websocketapidefaultRouteBackendStackwebsocketapidefaultRouteE75433E8Permission167FAA0D": Object {
+      "Properties": Object {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": Object {
+          "Fn::GetAtt": Array [
+            "handler9A1C0C74",
+            "Arn",
+          ],
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "arn:",
+              Object {
+                "Ref": "AWS::Partition",
+              },
+              ":execute-api:",
+              Object {
+                "Ref": "AWS::Region",
+              },
+              ":",
+              Object {
+                "Ref": "AWS::AccountId",
+              },
+              ":",
+              Object {
+                "Ref": "websocketapi6BAADC55",
+              },
+              "/*/*$default",
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::Lambda::Permission",
+    },
+    "websocketapidefaultRouteEDB130FF": Object {
+      "Properties": Object {
+        "ApiId": Object {
+          "Ref": "websocketapi6BAADC55",
+        },
+        "RouteKey": "$default",
+        "Target": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "integrations/",
+              Object {
+                "Ref": "websocketapiconnectRouteWebSocketIntegrationa76404738367620e6bbc9be82111ea649E3AB3B8",
+              },
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::ApiGatewayV2::Route",
+    },
+    "websocketapidisconnectRoute1CE296B1": Object {
+      "Properties": Object {
+        "ApiId": Object {
+          "Ref": "websocketapi6BAADC55",
+        },
+        "RouteKey": "$disconnect",
+        "Target": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "integrations/",
+              Object {
+                "Ref": "websocketapiconnectRouteWebSocketIntegrationa76404738367620e6bbc9be82111ea649E3AB3B8",
+              },
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::ApiGatewayV2::Route",
+    },
+    "websocketapidisconnectRouteBackendStackwebsocketapidisconnectRouteA44CF8DDPermission103044D4": Object {
+      "Properties": Object {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": Object {
+          "Fn::GetAtt": Array [
+            "handler9A1C0C74",
+            "Arn",
+          ],
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "arn:",
+              Object {
+                "Ref": "AWS::Partition",
+              },
+              ":execute-api:",
+              Object {
+                "Ref": "AWS::Region",
+              },
+              ":",
+              Object {
+                "Ref": "AWS::AccountId",
+              },
+              ":",
+              Object {
+                "Ref": "websocketapi6BAADC55",
+              },
+              "/*/*$disconnect",
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::Lambda::Permission",
+    },
+    "websocketauthorizerA68CA492": Object {
+      "Properties": Object {
+        "ApiId": Object {
+          "Ref": "websocketapi6BAADC55",
+        },
+        "AuthorizerType": "REQUEST",
+        "AuthorizerUri": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "arn:",
+              Object {
+                "Ref": "AWS::Partition",
+              },
+              ":apigateway:",
+              Object {
+                "Ref": "AWS::Region",
+              },
+              ":lambda:path/2015-03-31/functions/",
+              Object {
+                "Fn::GetAtt": Array [
+                  "handlerauthorizer4ED01BFC",
+                  "Arn",
+                ],
+              },
+              "/invocations",
+            ],
+          ],
+        },
+        "IdentitySource": Array [
+          "route.request.querystring.idToken",
+        ],
+        "Name": "lambdaAuthorizer",
+      },
+      "Type": "AWS::ApiGatewayV2::Authorizer",
+    },
+    "websocketstage112FEEBD": Object {
+      "Properties": Object {
+        "ApiId": Object {
+          "Ref": "websocketapi6BAADC55",
+        },
+        "AutoDeploy": true,
+        "StageName": "prod",
+      },
+      "Type": "AWS::ApiGatewayV2::Stage",
+    },
+  },
+}
+`;
