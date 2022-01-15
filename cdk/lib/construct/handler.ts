@@ -1,11 +1,8 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: MIT-0
 
-import * as cdk from "@aws-cdk/core";
-import * as dynamo from "@aws-cdk/aws-dynamodb";
-import * as lambda from "@aws-cdk/aws-lambda";
-import * as lambdanode from "@aws-cdk/aws-lambda-nodejs";
-import * as cognito from "@aws-cdk/aws-cognito";
+import { Construct } from "constructs";
+import { aws_dynamodb as dynamo, aws_lambda as lambda, aws_lambda_nodejs as lambdanode, aws_cognito as cognito, RemovalPolicy } from "aws-cdk-lib";
 
 interface HandlerProps {
     connectionIdTable: dynamo.ITable;
@@ -13,32 +10,31 @@ interface HandlerProps {
     userPoolClient: cognito.IUserPoolClient;
 }
 
-export class Handler extends cdk.Construct {
+export class Handler extends Construct {
     readonly authHandler: lambda.IFunction;
     readonly websocketHandler: lambda.IFunction;
 
-    constructor(scope: cdk.Construct, id: string, props: HandlerProps) {
+    constructor(scope: Construct, id: string, props: HandlerProps) {
         super(scope, id);
 
-        const authorizerLambda = new lambdanode.NodejsFunction(this, "authorizer", {
+        const authHandler = new lambdanode.NodejsFunction(this, "AuthHandler", {
             entry: "../backend/authorizer/index.ts",
             environment: {
                 USER_POOL_ID: props.userPool.userPoolId,
-                USER_POOL_REGION: cdk.Stack.of(props.userPool).region,
                 APP_CLIENT_ID: props.userPoolClient.userPoolClientId,
             },
         });
 
-        const handler = new lambdanode.NodejsFunction(this, "handler", {
+        const websocketHandler = new lambdanode.NodejsFunction(this, "WebSocketHandler", {
             entry: "../backend/websocket/index.ts",
             environment: {
                 CONNECTION_TABLE_NAME: props.connectionIdTable.tableName,
             },
         });
 
-        props.connectionIdTable.grantReadWriteData(handler);
+        props.connectionIdTable.grantReadWriteData(websocketHandler);
 
-        this.authHandler = authorizerLambda;
-        this.websocketHandler = handler;
+        this.authHandler = authHandler;
+        this.websocketHandler = websocketHandler;
     }
 }

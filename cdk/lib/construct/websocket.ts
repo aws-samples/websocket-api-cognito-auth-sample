@@ -1,11 +1,11 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: MIT-0
 
-import * as cdk from "@aws-cdk/core";
-import * as lambda from "@aws-cdk/aws-lambda";
-import * as iam from "@aws-cdk/aws-iam";
-import * as agw from "@aws-cdk/aws-apigatewayv2";
-import * as agwi from "@aws-cdk/aws-apigatewayv2-integrations";
+import { Construct } from "constructs";
+import { aws_lambda as lambda } from "aws-cdk-lib";
+import * as agw from "@aws-cdk/aws-apigatewayv2-alpha";
+import * as agwi from "@aws-cdk/aws-apigatewayv2-integrations-alpha";
+import * as agwa from "@aws-cdk/aws-apigatewayv2-authorizers-alpha";
 
 interface WebSocketProps {
     websocketHandler: lambda.IFunction;
@@ -16,92 +16,38 @@ interface WebSocketProps {
     querystringKeyForIdToken?: string;
 }
 
-export class WebSocket extends cdk.Construct {
+export class WebSocket extends Construct {
     readonly api: agw.WebSocketApi;
     private readonly defaultStageName = "prod";
 
-    constructor(scope: cdk.Construct, id: string, props: WebSocketProps) {
+    constructor(scope: Construct, id: string, props: WebSocketProps) {
         super(scope, id);
 
-        const integration = new agwi.LambdaWebSocketIntegration({
-            handler: props.websocketHandler,
+        const authorizer = new agwa.WebSocketLambdaAuthorizer("Authorizer", props.authHandler, {
+            identitySource: [`route.request.querystring.${props.querystringKeyForIdToken ?? "idToken"}`],
         });
 
-        this.api = new agw.WebSocketApi(this, `api`, {
+        this.api = new agw.WebSocketApi(this, "Api", {
             connectRouteOptions: {
-                integration,
+                authorizer,
+                integration: new agwi.WebSocketLambdaIntegration("ConnectIntegration", props.websocketHandler),
             },
             disconnectRouteOptions: {
-                integration,
+                integration: new agwi.WebSocketLambdaIntegration("DisconnectIntegration", props.websocketHandler),
             },
             defaultRouteOptions: {
-                integration,
+                integration: new agwi.WebSocketLambdaIntegration("DefaultIntegration", props.websocketHandler),
             },
         });
 
-        new agw.WebSocketStage(this, `stage`, {
+        new agw.WebSocketStage(this, `Stage`, {
             webSocketApi: this.api,
             stageName: this.defaultStageName,
             autoDeploy: true,
         });
-
-        // create an authorizer for $connect route.
-        // We fetch L1 construct because currently L2 WebSocket API construct doesn't support authorizers.
-        const authorizer = this.createLambdaAuthorizer(props.authHandler, props.querystringKeyForIdToken ?? "idToken");
-        const connectRoute = this.api.node.findChild("$connect-Route").node.defaultChild as agw.CfnRoute;
-        connectRoute.authorizationType = "CUSTOM";
-        connectRoute.authorizerId = authorizer.ref;
-    }
-
-    grantManagementApiAccess(principal: iam.IGrantable) {
-        principal.grantPrincipal.addToPrincipalPolicy(
-            new iam.PolicyStatement({
-                actions: ["execute-api:ManageConnections"],
-                resources: [`${this.apiArn}/*`],
-            }),
-        );
     }
 
     get apiEndpoint() {
         return `${this.api.apiEndpoint}/${this.defaultStageName}`;
-    }
-
-    private get apiRef() {
-        return (this.api.node.defaultChild as agw.CfnApi).ref;
-    }
-
-    private get apiArn() {
-        return cdk.Stack.of(this).formatArn({
-            service: "execute-api",
-            resource: this.apiRef,
-        });
-    }
-
-    private createLambdaAuthorizer(handler: lambda.IFunction, tokenKey: string): agw.CfnAuthorizer {
-        const authorizer = new agw.CfnAuthorizer(this, "authorizer", {
-            apiId: this.apiRef,
-            authorizerType: "REQUEST",
-            identitySource: [`route.request.querystring.${tokenKey}`],
-            name: "lambdaAuthorizer",
-            authorizerUri: this.integrationUri(handler),
-        });
-
-        handler.addPermission(`${cdk.Names.uniqueId(this)}:Permissions`, {
-            principal: new iam.ServicePrincipal("apigateway.amazonaws.com"),
-            sourceArn: `${this.apiArn}/authorizers/${authorizer.ref}`,
-        });
-
-        return authorizer;
-    }
-
-    private integrationUri(handler: lambda.IFunction): string {
-        const path = ["2015-03-31", "functions", handler.functionArn, "invocations"].join("/");
-
-        return cdk.Stack.of(this).formatArn({
-            service: "apigateway",
-            account: "lambda",
-            resource: "path",
-            resourceName: path,
-        });
     }
 }
