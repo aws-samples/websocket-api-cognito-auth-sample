@@ -13,7 +13,7 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
     const connectionId = event.requestContext.connectionId!;
 
     if (routeKey == "$connect") {
-        const userId = event.requestContext.authorizer?.userId;
+        const userId = event.requestContext.authorizer!.userId;
 
         try {
             await docClient
@@ -58,6 +58,7 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
         if (error.statusCode == 410) {
             await removeConnectionId(connectionId);
         } else {
+            console.log(e);
             throw e;
         }
     }

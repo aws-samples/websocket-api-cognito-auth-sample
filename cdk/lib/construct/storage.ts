@@ -1,20 +1,20 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: MIT-0
 
-import * as cdk from "@aws-cdk/core";
-import * as dynamo from "@aws-cdk/aws-dynamodb";
+import { Construct } from "constructs";
+import { aws_dynamodb as dynamo, RemovalPolicy } from "aws-cdk-lib";
 
-export class Storage extends cdk.Construct {
+export class Storage extends Construct {
     readonly connectionIdTable: dynamo.ITable;
 
-    constructor(scope: cdk.Construct, id: string) {
+    constructor(scope: Construct, id: string) {
         super(scope, id);
 
-        const connectionIdTable = new dynamo.Table(this, "connectionIdTable", {
+        const connectionIdTable = new dynamo.Table(this, "ConnectionIdTable", {
             partitionKey: { name: "connectionId", type: dynamo.AttributeType.STRING },
             timeToLiveAttribute: "removedAt",
             billingMode: dynamo.BillingMode.PAY_PER_REQUEST,
-            removalPolicy: cdk.RemovalPolicy.DESTROY,
+            removalPolicy: RemovalPolicy.DESTROY,
         });
 
         connectionIdTable.addGlobalSecondaryIndex({

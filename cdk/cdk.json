@@ -1,13 +1,23 @@
 {
   "app": "npx ts-node --prefer-ts-exts bin/cdk.ts",
   "context": {
-    "@aws-cdk/core:enableStackNameDuplicates": "true",
-    "aws-cdk:enableDiffNoFail": "true",
-    "@aws-cdk/core:stackRelativeExports": "true",
-    "@aws-cdk/aws-ecr-assets:dockerIgnoreSupport": true,
-    "@aws-cdk/aws-secretsmanager:parseOwnedSecretName": true,
-    "@aws-cdk/aws-kms:defaultKeyPolicies": true,
-    "@aws-cdk/aws-s3:grantWriteWithoutAcl": true,
-    "@aws-cdk/aws-ecs-patterns:removeDefaultDesiredCount": true
+  }, 
+  "watch": {
+    "include": [
+      "**",
+      "../backend/**/*.ts"
+    ],
+    "exclude": [
+      "README.md",
+      "cdk*.json",
+      "**/*.d.ts",
+      "**/*.js",
+      "tsconfig.json",
+      "package*.json",
+      "yarn.lock",
+      "node_modules",
+      "../backend/node_modules",
+      "test"
+    ]
   }
 }
