@@ -182,7 +182,7 @@ Object {
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "036d0c91ab1c8e158c798859b6adb29b847ca97cb7c3a438b53fb9f170e50d14.zip",
+          "S3Key": "edf6df94493c5864d581ef24056e45593c4d867a25d16ac99c240669af94c17e.zip",
         },
         "Environment": Object {
           "Variables": Object {
@@ -251,6 +251,7 @@ Object {
                 "dynamodb:PutItem",
                 "dynamodb:UpdateItem",
                 "dynamodb:DeleteItem",
+                "dynamodb:DescribeTable",
               ],
               "Effect": "Allow",
               "Resource": Array [
