@@ -11,6 +11,9 @@ jobs:
           node-version: "16.x"
       - run: |
           npm ci
+        working-directory: ./backend
+      - run: |
+          npm ci
           npm run build
           npm run test
         working-directory: ./cdk
