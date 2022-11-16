@@ -53,7 +53,7 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
                 Data: JSON.stringify({ message: event.body }),
             })
             .promise();
-    } catch (e) {
+    } catch (e: any) {
         const error: AWSError = e;
         if (error.statusCode == 410) {
             await removeConnectionId(connectionId);

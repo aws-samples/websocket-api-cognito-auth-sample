@@ -42,21 +42,21 @@ BackendStack.webSocketEndpoint = wss://xxxxxxxxx.execute-api.ap-northeast-1.amaz
 
 この情報は次のフロントエンドのセットアップに利用することができます。
 
-フロントエンドは`localhost:8080`で動作確認します。
-下記のように aws-exports.template.ts をリネームして**必要な項目を埋めてください**。
+フロントエンドは`localhost:3000`で動作確認します。
+下記のように `.env.sample` をリネームして**必要な項目を埋めてください**。
 ```sh
 cd frontend
-mv src/aws-exports.template.ts src/aws-exports.ts
+cp .env.sample .env.local
 ```
 
 あとは必要なパッケージをインストールして、localhostでlistenさせます。
 ```sh
 # frontend ディレクトリ内で実行
-yarn install
-yarn serve
+npm ci
+npm run dev
 ```
 
-ブラウザを開き、http://localhost:8080 にアクセスしてください。
+ブラウザを開き、http://localhost:3000 にアクセスしてください。
 
 ## 実装の説明
 ### IaC
@@ -100,19 +100,10 @@ DynamoDBに保存された情報を利用して、他のサーバーから特定
 ](https://docs.aws.amazon.com/apigateway/latest/developerguide/apigateway-how-to-call-websocket-api-connections.html)もご参照ください。
 
 ### フロントエンド
-フロントエンドは、2画面で構成されています。
-画面の実装はそれぞれ`src/views/Home.vue`、`src/views/Echo.vue`にあります。
+フロントエンドは、ReactのSPAで構成されています。
+主要なコンポーネントは [`src/components/echo.tsx`](frontend/src/components/echo.tsx) に実装されています。
 
-**Home.vue**
-* 新規登録・ログイン・ログアウトを実施する画面です。
-* `aws-amplify-vue`の`AmplifyPlugin`を利用しているため、非常に少ないコードで実装できます。
-* ログインしているかのステートは`AmplifyEventBus`を利用して取得します。
-  * ある程度の規模があるフロントエンドの場合、Vuexでステートを管理した方が良いかもしれません。(今回は未実装)
-
-**Echo.vue**
-* `websocket`というnpmパッケージを利用してWebSocket通信をします。
-* 認証のために、クエリパラメータにidTokenを付与します。
-* idTokenは`aws-amplify`のAuthというライブラリで取得できます。
+認証のために、Cognito UserPoolのIDトークンをクエリストリングに付与しています。WebSocket APIの認証方法にはいくつか考えられますが、それぞれトレードオフがあります。詳細は[こちらのIssue](https://github.com/aws-samples/websocket-api-cognito-auth-sample/issues/15#issuecomment-1173401338)もご覧ください。
 
 ## Clean up
 検証が完了した後は、下記のコマンドで作成されたAWSリソースを削除することができます。
