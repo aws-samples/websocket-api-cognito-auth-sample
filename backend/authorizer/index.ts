@@ -20,7 +20,7 @@ export const handler: APIGatewayRequestAuthorizerHandler = async (event, context
         console.log("Token is valid. Payload:", payload);
 
         return allowPolicy(event.methodArn, payload);
-    } catch (error) {
+    } catch (error: any) {
         console.log(error.message);
         return denyAllPolicy();
     }

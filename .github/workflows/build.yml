@@ -1,0 +1,43 @@
+name: Build
+on: [push, workflow_dispatch]
+jobs:
+  Build-and-Test-CDK:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: "16.x"
+      - run: |
+          npm ci
+        working-directory: ./backend
+      - run: |
+          npm ci
+          npm run build
+          npm run test
+        working-directory: ./cdk
+  Build-and-Test-Backend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: "16.x"
+      - run: |
+          npm ci
+          npm run build
+        working-directory: ./backend
+  Build-and-Test-Frontend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: "16.x"
+      - run: |
+          npm ci
+          npm run build
+        working-directory: ./frontend
