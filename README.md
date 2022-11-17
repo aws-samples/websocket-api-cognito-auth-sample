@@ -1,7 +1,7 @@
 # WebSocket API Cognito Auth Sample
 [![Build](https://github.com/aws-samples/websocket-api-cognito-auth-sample/actions/workflows/build.yml/badge.svg)](https://github.com/aws-samples/websocket-api-cognito-auth-sample/actions/workflows/build.yml)
 
-**NOTE: ** [English version is here](README_en.md).
+**NOTE:** [English version is here](README_en.md).
 
 ## 概要
 Amazon API Gateway WebSocket APIにCognito認証を組み込むサンプルです。
