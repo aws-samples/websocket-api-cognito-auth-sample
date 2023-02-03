@@ -19,11 +19,9 @@ function App() {
   };
   Amplify.configure(amplifyConfig);
 
-  const { authStatus } = useAuthenticator((context) => [context.user]);
-
   return (
     <>
-      <Authenticator>
+      <Authenticator signUpAttributes={['email']} loginMechanisms={['username']}>
         {({ signOut, user }) => {
           return (
             <>

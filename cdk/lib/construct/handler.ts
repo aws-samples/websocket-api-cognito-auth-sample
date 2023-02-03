@@ -3,6 +3,7 @@
 
 import { Construct } from "constructs";
 import { aws_dynamodb as dynamo, aws_lambda as lambda, aws_lambda_nodejs as lambdanode, aws_cognito as cognito, RemovalPolicy } from "aws-cdk-lib";
+import { Runtime } from "aws-cdk-lib/aws-lambda";
 
 interface HandlerProps {
     connectionIdTable: dynamo.ITable;
@@ -18,6 +19,7 @@ export class Handler extends Construct {
         super(scope, id);
 
         const authHandler = new lambdanode.NodejsFunction(this, "AuthHandler", {
+            runtime: Runtime.NODEJS_18_X,
             entry: "../backend/authorizer/index.ts",
             environment: {
                 USER_POOL_ID: props.userPool.userPoolId,
@@ -26,6 +28,7 @@ export class Handler extends Construct {
         });
 
         const websocketHandler = new lambdanode.NodejsFunction(this, "WebSocketHandler", {
+            runtime: Runtime.NODEJS_18_X,
             entry: "../backend/websocket/index.ts",
             environment: {
                 CONNECTION_TABLE_NAME: props.connectionIdTable.tableName,
