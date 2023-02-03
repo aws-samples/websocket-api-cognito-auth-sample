@@ -6,7 +6,7 @@ import { Template } from "aws-cdk-lib/assertions";
 import { BackendStack } from "../lib/stack/backend";
 
 test("Snapshot test", () => {
-    const app = new App();
-    const stack = new BackendStack(app, "BackendStack");
-    expect(Template.fromStack(stack)).toMatchSnapshot();
+  const app = new App();
+  const stack = new BackendStack(app, "BackendStack");
+  expect(Template.fromStack(stack)).toMatchSnapshot();
 });

@@ -1,6 +1,6 @@
-import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react';
-import resolve from '@rollup/plugin-node-resolve';
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
+import resolve from "@rollup/plugin-node-resolve";
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -8,12 +8,12 @@ export default defineConfig({
     rollupOptions: {
       // without this vite build fails
       // related to: https://github.com/aws-amplify/amplify-js/issues/9866
-      external: ['mapbox-gl'],
+      external: ["mapbox-gl"],
     },
   },
   define: {
     // https://stackoverflow.com/a/73541205/18550269
-    global: 'window',
+    global: "window",
   },
   plugins: [
     react(),
@@ -23,8 +23,8 @@ export default defineConfig({
         preferBuiltins: false,
         browser: true,
       }),
-      enforce: 'pre',
-      apply: 'build',
+      enforce: "pre",
+      apply: "build",
     },
   ],
 });
