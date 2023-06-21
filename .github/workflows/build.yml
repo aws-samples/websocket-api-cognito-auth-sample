@@ -16,6 +16,7 @@ jobs:
           npm ci
           npm run build
           npm run test
+          npx cdk synth
         working-directory: ./cdk
   Build-and-Test-Backend:
     runs-on: ubuntu-latest
