@@ -3,9 +3,9 @@
 
 import { Construct } from "constructs";
 import { aws_lambda as lambda } from "aws-cdk-lib";
-import * as agw from "@aws-cdk/aws-apigatewayv2-alpha";
-import * as agwi from "@aws-cdk/aws-apigatewayv2-integrations-alpha";
-import * as agwa from "@aws-cdk/aws-apigatewayv2-authorizers-alpha";
+import * as agw from  "aws-cdk-lib/aws-apigatewayv2";
+import * as agwi from "aws-cdk-lib/aws-apigatewayv2-integrations";
+import * as agwa from "aws-cdk-lib/aws-apigatewayv2-authorizers";
 
 interface WebSocketProps {
   websocketHandler: lambda.IFunction;

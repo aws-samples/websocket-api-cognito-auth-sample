@@ -117,7 +117,7 @@ Object {
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "4859a285d26dd41c833b1b71aa784ece8d41e32919b8aae9cc3aa4cedc9bfac7.zip",
+          "S3Key": "124f907d63d7c431ec7588b5867c8115bfc850554eec397417d4cc1f773e69a8.zip",
         },
         "Environment": Object {
           "Variables": Object {
@@ -182,7 +182,7 @@ Object {
           "S3Bucket": Object {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "e9edfc77414736ad31d2cc95dfc5a9f17de77c9b744b2b464c377c6b652e0c4b.zip",
+          "S3Key": "d17255069f25ea6b2610ac0b6126fea8c758027c6242278af035308e9eece195.zip",
         },
         "Environment": Object {
           "Variables": Object {
@@ -300,7 +300,7 @@ Object {
                     Object {
                       "Ref": "WebsocketApiD2C932E4",
                     },
-                    "/*/POST/@connections/*",
+                    "/*/*/@connections/*",
                   ],
                 ],
               },
@@ -505,7 +505,7 @@ Object {
               Object {
                 "Ref": "WebsocketApiD2C932E4",
               },
-              "/*/*$connect",
+              "/*$connect",
             ],
           ],
         },
@@ -619,7 +619,7 @@ Object {
               Object {
                 "Ref": "WebsocketApiD2C932E4",
               },
-              "/*/*$default",
+              "/*$default",
             ],
           ],
         },
@@ -709,7 +709,7 @@ Object {
               Object {
                 "Ref": "WebsocketApiD2C932E4",
               },
-              "/*/*$disconnect",
+              "/*$disconnect",
             ],
           ],
         },

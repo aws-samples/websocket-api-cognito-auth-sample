@@ -7,4 +7,4 @@ import "source-map-support/register";
 import { BackendStack } from "../lib/stack/backend";
 
 const app = new App();
-new BackendStack(app, `BackendStack`);
+new BackendStack(app, `BackendWebSocketStack`);
