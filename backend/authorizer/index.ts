@@ -36,7 +36,7 @@ const denyAllPolicy = () => {
           Action: "*",
           Effect: "Deny",
           Resource: "*",
-        },
+        } as const,
       ],
     },
   };
@@ -52,7 +52,7 @@ const allowPolicy = (methodArn: string, idToken: any) => {
           Action: "execute-api:Invoke",
           Effect: "Allow",
           Resource: methodArn,
-        },
+        } as const,
       ],
     },
     context: {
