@@ -1,5 +1,5 @@
 import { FC, useEffect, useReducer, useState } from "react";
-import { Auth } from "aws-amplify";
+import { fetchAuthSession } from "aws-amplify/auth";
 import { Typography, Button, TextField, Stack } from "@mui/material";
 import { SubmitHandler, useForm } from "react-hook-form";
 import config from "../config";
@@ -16,8 +16,8 @@ const Echo: FC = () => {
   const [closed, forceClose] = useReducer(() => true, false);
 
   const initializeClient = async () => {
-    const currentSession = await Auth.currentSession();
-    const idToken = currentSession.getIdToken().getJwtToken();
+    const currentSession = await fetchAuthSession();
+    const idToken = currentSession.tokens?.idToken;
 
     const client = new WebSocket(`${config.apiEndpoint}?idToken=${idToken}`);
 

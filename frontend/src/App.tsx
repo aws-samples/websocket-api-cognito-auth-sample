@@ -1,7 +1,7 @@
-import { Amplify, Auth } from "aws-amplify";
+import { Amplify } from "aws-amplify";
 import config from "./config";
 import "@aws-amplify/ui-react/styles.css";
-import { Authenticator, Button, useAuthenticator } from "@aws-amplify/ui-react";
+import { Authenticator, Button } from "@aws-amplify/ui-react";
 import Echo from "./components/echo";
 import { AppBar, Avatar, Container, Toolbar, Typography } from "@mui/material";
 
@@ -10,9 +10,11 @@ function App() {
     ...(true || config.userPoolId != null
       ? {
           Auth: {
-            region: config.awsRegion,
-            userPoolId: config.userPoolId,
-            userPoolWebClientId: config.userPoolClientId,
+            Cognito: {
+              region: config.awsRegion,
+              userPoolId: config.userPoolId,
+              userPoolClientId: config.userPoolClientId,
+            },
           },
         }
       : {}),
@@ -21,7 +23,7 @@ function App() {
 
   return (
     <>
-      <Authenticator signUpAttributes={['email']} loginMechanisms={['username']}>
+      <Authenticator signUpAttributes={["email"]} loginMechanisms={["username"]}>
         {({ signOut, user }) => {
           return (
             <>
