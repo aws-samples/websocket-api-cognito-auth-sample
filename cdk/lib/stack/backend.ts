@@ -7,6 +7,7 @@ import { Auth } from "../construct/auth";
 import { Storage } from "../construct/storage";
 import { Handler } from "../construct/handler";
 import { WebSocket } from "../construct/websocket";
+import { Events } from "../construct/events";
 
 export class BackendStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
@@ -26,6 +27,8 @@ export class BackendStack extends cdk.Stack {
     });
 
     websocket.api.grantManageConnections(handler.websocketHandler);
+
+    const events = new Events(this, "Events", { userPool: auth.userPool });
 
     {
       new cdk.CfnOutput(this, `Region`, {
