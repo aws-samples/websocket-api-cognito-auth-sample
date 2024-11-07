@@ -3,6 +3,23 @@
 exports[`Snapshot test 1`] = `
 {
   "Outputs": {
+    "AppSyncEventsEndpoint": {
+      "Value": {
+        "Fn::Join": [
+          "",
+          [
+            "https://",
+            {
+              "Fn::GetAtt": [
+                "EventsD32975C2",
+                "Dns.Http",
+              ],
+            },
+            "/event",
+          ],
+        ],
+      },
+    },
     "Region": {
       "Value": {
         "Ref": "AWS::Region",
@@ -108,6 +125,66 @@ exports[`Snapshot test 1`] = `
       },
       "Type": "AWS::Cognito::UserPoolClient",
     },
+    "EventsD32975C2": {
+      "Properties": {
+        "EventConfig": {
+          "AuthProviders": [
+            {
+              "AuthType": "API_KEY",
+            },
+            {
+              "AuthType": "AMAZON_COGNITO_USER_POOLS",
+              "CognitoConfig": {
+                "AwsRegion": {
+                  "Ref": "AWS::Region",
+                },
+                "UserPoolId": {
+                  "Ref": "AuthUserPool8115E87F",
+                },
+              },
+            },
+          ],
+          "ConnectionAuthModes": [
+            {
+              "AuthType": "API_KEY",
+            },
+            {
+              "AuthType": "AMAZON_COGNITO_USER_POOLS",
+            },
+          ],
+          "DefaultPublishAuthModes": [
+            {
+              "AuthType": "API_KEY",
+            },
+            {
+              "AuthType": "AMAZON_COGNITO_USER_POOLS",
+            },
+          ],
+          "DefaultSubscribeAuthModes": [
+            {
+              "AuthType": "API_KEY",
+            },
+            {
+              "AuthType": "AMAZON_COGNITO_USER_POOLS",
+            },
+          ],
+        },
+        "Name": "BackendStack-Events-C56593BE",
+      },
+      "Type": "AWS::AppSync::Api",
+    },
+    "EventsNamespaceB28AAACA": {
+      "Properties": {
+        "ApiId": {
+          "Fn::GetAtt": [
+            "EventsD32975C2",
+            "ApiId",
+          ],
+        },
+        "Name": "default",
+      },
+      "Type": "AWS::AppSync::ChannelNamespace",
+    },
     "HandlerAuthHandlerEB1BC6C8": {
       "DependsOn": [
         "HandlerAuthHandlerServiceRoleC7D9E369",
@@ -124,7 +201,6 @@ exports[`Snapshot test 1`] = `
             "APP_CLIENT_ID": {
               "Ref": "AuthUserPoolClientC635291F",
             },
-            "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "1",
             "USER_POOL_ID": {
               "Ref": "AuthUserPool8115E87F",
             },
@@ -186,7 +262,6 @@ exports[`Snapshot test 1`] = `
         },
         "Environment": {
           "Variables": {
-            "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "1",
             "CONNECTION_TABLE_NAME": {
               "Ref": "StorageConnectionIdTable8B3A349D",
             },
