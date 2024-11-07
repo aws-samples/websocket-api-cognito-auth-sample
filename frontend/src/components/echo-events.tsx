@@ -63,7 +63,16 @@ const EchoEvents: FC = () => {
       </Typography>
 
       <Stack direction="row" spacing={2} sx={{ m: 5 }}>
-        <TextField id="message" label="Message" size="small" required {...register("message")} onKeyDown={handleUserKeyDown} sx={{ width: 400 }} />
+        <TextField
+          id="message"
+          label="Message"
+          size="small"
+          required
+          {...register("message")}
+          autoComplete="off"
+          onKeyDown={handleUserKeyDown}
+          sx={{ width: 400 }}
+        />
         <Button variant="contained" color="primary" onClick={handleSubmit(sendMessage)}>
           Send
         </Button>
