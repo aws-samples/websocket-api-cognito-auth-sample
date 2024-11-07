@@ -46,6 +46,10 @@ export class BackendStack extends cdk.Stack {
       new cdk.CfnOutput(this, `WebSocketEndpoint`, {
         value: websocket.apiEndpoint,
       });
+
+      new cdk.CfnOutput(this, `AppSyncEventsEndpoint`, {
+        value: events.endpoint,
+      });
     }
   }
 }

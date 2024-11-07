@@ -8,6 +8,8 @@ export interface EventsProps {
 }
 
 export class Events extends Construct {
+  readonly endpoint: string;
+
   constructor(scope: Construct, id: string, props: EventsProps) {
     super(scope, id);
 
@@ -43,6 +45,6 @@ export class Events extends Construct {
     // });
     // new CfnOutput(this, "ApiKeyOutput", { value: apiKey.getAtt("ApiKey").toString() });
 
-    new CfnOutput(this, "ApiUrl", { value: `https://${api.getAtt("Dns.Http").toString()}/event` });
+    this.endpoint = `https://${api.getAtt("Dns.Http").toString()}/event`;
   }
 }

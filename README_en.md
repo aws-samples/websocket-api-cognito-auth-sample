@@ -5,6 +5,9 @@ This sample demonstrates how to integrate Cognito authentication with Amazon API
 
 It includes the Lambda implementations for Lambda Authorizer and API Gateway Lambda proxy, AWS Cloud Development Kit (CDK) code to deploy backend infrastructure, and React frontend implementation for demonstration purposes. 
 
+> [!NOTE]
+> We added an example implementation for [AppSync Events](https://docs.aws.amazon.com/appsync/latest/eventapi/event-api-welcome.html) as well. In this case, because most of the authentication mechanism using Cognito user pool is abstracted away, users will not need much code to implement auth. Please refer to [`echo-events.tsx` (React)](./frontend/src/components/echo-events.tsx) and [`events.ts` (CDK)](./cdk/lib//construct/events.ts) for more details.
+
 ## Architecture
 This sample contains the least and simplest set of implementations to achieve Cognito JWT authentication and authorization for WebSocket API. Please refer to [implementation](#implementation) section for the details.
 
@@ -34,10 +37,11 @@ Initial deployment usually takes about 10 minutes. After a successful deployment
 
 ```sh
 Outputs:
-BackendStack.region = ap-northeast-1
-BackendStack.userPoolId = ap-northeast-1_xxxxxxx
-BackendStack.userPoolWebClientId = xxxxxxxxxxxxxxxxxxxxxxxxxx
-BackendStack.webSocketEndpoint = wss://xxxxxxxxx.execute-api.ap-northeast-1.amazonaws.com/prod
+BackendWebSocketStack.AppSyncEventsEndpoint = https://xxxxx.appsync-api.ap-northeast-1.amazonaws.com/event
+BackendWebSocketStack.Region = ap-northeast-1
+BackendWebSocketStack.UserPoolId = ap-northeast-1_xxxxxxx
+BackendWebSocketStack.UserPoolWebClientId = xxxxxxxxxxxxxxxxxxxxxxxxxx
+BackendWebSocketStack.WebSocketEndpoint = wss://xxxxxxxxx.execute-api.ap-northeast-1.amazonaws.com/prod
 ```
 
 You can use those values to configure the frontend app next. Please create `.env.local` file by running the following command:

@@ -8,6 +8,9 @@ Amazon API Gateway WebSocket APIにCognito認証を組み込むサンプルで�
 
 Lambda AuthorizerとAPI GatewayのためのLambda関数と、バックエンドデプロイのためのCDKコード、動作確認のためのフロントエンドの実装が含まれます。
 
+> [!NOTE]
+> [AppSync Events](https://docs.aws.amazon.com/appsync/latest/eventapi/event-api-welcome.html)での実装例も追加しました。こちらはCognito UserPoolを利用した認証の仕組みが隠蔽されるため、ユーザー側の実装はよりシンプルになります。詳細は[`echo-events.tsx` (React)](./frontend/src/components/echo-events.tsx)と [`events.ts` (CDK)](./cdk/lib//construct/events.ts)もご覧ください。
+
 ## アーキテクチャ
 本サンプルは、WebSocket APIでのCognito JWT認証を実現するための最小限のアーキテクチャを実装しています。
 
@@ -38,10 +41,11 @@ npx cdk deploy --require-approval never
 
 ```sh
 Outputs:
-BackendStack.region = ap-northeast-1
-BackendStack.userPoolId = ap-northeast-1_xxxxxxx
-BackendStack.userPoolWebClientId = xxxxxxxxxxxxxxxxxxxxxxxxxx
-BackendStack.webSocketEndpoint = wss://xxxxxxxxx.execute-api.ap-northeast-1.amazonaws.com/prod
+BackendWebSocketStack.AppSyncEventsEndpoint = https://xxxxx.appsync-api.ap-northeast-1.amazonaws.com/event
+BackendWebSocketStack.Region = ap-northeast-1
+BackendWebSocketStack.UserPoolId = ap-northeast-1_xxxxxxx
+BackendWebSocketStack.UserPoolWebClientId = xxxxxxxxxxxxxxxxxxxxxxxxxx
+BackendWebSocketStack.WebSocketEndpoint = wss://xxxxxxxxx.execute-api.ap-northeast-1.amazonaws.com/prod
 ```
 
 この情報は次のフロントエンドのセットアップに利用することができます。

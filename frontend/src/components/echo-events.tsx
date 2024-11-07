@@ -1,5 +1,4 @@
 import { FC, useEffect, useState } from "react";
-import { fetchAuthSession } from "aws-amplify/auth";
 import { Typography, Button, TextField, Stack } from "@mui/material";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { events } from "aws-amplify/data";
@@ -14,7 +13,6 @@ const EchoEvents: FC = () => {
   const [messages, setMessages] = useState<string[]>([]);
 
   const initializeClient = async () => {
-    const currentSession = await fetchAuthSession();
     console.log(`initializing connection...`);
     const channel = await events.connect("/default/test");
     channel.subscribe({
@@ -22,7 +20,10 @@ const EchoEvents: FC = () => {
         console.log(data);
         setMessages((prev) => [...prev, data.message.message]);
       },
-      error: (err) => console.error(err),
+      error: (err) => {
+        console.error(`error on subscription ${err}`);
+        setStatus("error");
+      },
     });
     setStatus("connected");
     console.log("successfully initialized connection.");
