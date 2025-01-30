@@ -30,9 +30,7 @@ Lambda AuthorizerとAPI GatewayのためのLambda関数と、バックエンド�
 CDKについての詳細は、[Getting started with the AWS CDK](https://docs.aws.amazon.com/cdk/latest/guide/getting_started.html)をご覧ください。
 
 ```sh
-cd backend
-npm ci
-cd ../cdk
+cd cdk
 npm ci
 npx cdk deploy --require-approval never
 ```

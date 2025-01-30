@@ -194,7 +194,7 @@ exports[`Snapshot test 1`] = `
           "S3Bucket": {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "124f907d63d7c431ec7588b5867c8115bfc850554eec397417d4cc1f773e69a8.zip",
+          "S3Key": "49724f6f63ef051e4ffe30f9d395f77724d30d70203aa8936c4d8a237e3e0d53.zip",
         },
         "Environment": {
           "Variables": {
@@ -213,7 +213,7 @@ exports[`Snapshot test 1`] = `
             "Arn",
           ],
         },
-        "Runtime": "nodejs18.x",
+        "Runtime": "nodejs22.x",
       },
       "Type": "AWS::Lambda::Function",
     },
@@ -258,7 +258,7 @@ exports[`Snapshot test 1`] = `
           "S3Bucket": {
             "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
           },
-          "S3Key": "d17255069f25ea6b2610ac0b6126fea8c758027c6242278af035308e9eece195.zip",
+          "S3Key": "1420582258203038c25a74ce463fd06027cf773e9fd7165eb8ed20a360b78bda.zip",
         },
         "Environment": {
           "Variables": {
@@ -274,7 +274,7 @@ exports[`Snapshot test 1`] = `
             "Arn",
           ],
         },
-        "Runtime": "nodejs18.x",
+        "Runtime": "nodejs22.x",
       },
       "Type": "AWS::Lambda::Function",
     },
